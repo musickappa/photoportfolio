@@ -1,0 +1,3 @@
+【Python】Docker、Django、PostgresqlでWebアプリを開発し、Render.comで公開する：https://qiita.com/BigMcQueen/items/6649a02d8db7ed430ec6
+Docker×Django×PostgreSQLの環境構築(備忘録)：https://zenn.dev/iroristudio/articles/0216072d2d1f24
+Dockerを利用して、DjangoアプリをAWS（EC2）にデプロイする方法：https://zenn.dev/leon0305/articles/8518e520e3b5ca
