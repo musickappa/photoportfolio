@@ -1,17 +1,17 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from .models import Photo
+from .forms import ContactForm
 
-# モデルとフォームを呼び出す
-from .models import Myprofile
-from .forms import MyprofileForm
 
-# 投稿機能と投稿の表示
-def myprofile(request):
-    template_name = 'myprofile/myprofile.html'
-    contents = Myprofile.objects.all()
-    form = MyprofileForm(request.POST or None)
-    params = {'contents': contents, 'form': form}
+def index(request):
+    photos = Photo.objects.all()
+    form = ContactForm(request.POST or None)
     if form.is_valid():
-        myprofile = form.save(commit=False)
-        myprofile.save()
-        return redirect('myprofile:myprofile')
-    return render(request, template_name, params)
+        form.save()
+        return HttpResponseRedirect(reverse('myprofile:index') + '?sent=1#contact')
+    return render(request, 'myprofile/index.html', {
+        'photos': photos,
+        'form': form,
+    })

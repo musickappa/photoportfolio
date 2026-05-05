@@ -1,13 +1,8 @@
 from django import forms
+from .models import Contact
 
-from .models import Myprofile
 
-
-class MyprofileForm(forms.ModelForm):
+class ContactForm(forms.ModelForm):
     class Meta:
-        model = Myprofile
-        fields = ['name', 'content']
-        widgets = {
-            'name': forms.TextInput(),
-            'content': forms.Textarea()
-        }
+        model = Contact
+        fields = ['name', 'email', 'message']

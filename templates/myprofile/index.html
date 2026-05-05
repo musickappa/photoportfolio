@@ -1,0 +1,155 @@
+{% extends 'myprofile/base.html' %}
+
+{% block content %}
+
+<!-- Hero -->
+<div class="hero" id="home">
+  <div class="hero-bg-word">PHOTO</div>
+  <div class="hero-inner">
+    <p class="hero-tag">Photography Portfolio</p>
+    <h1 class="hero-title">
+      Capturing<br>
+      <em>Moments</em><br>
+      That Last
+    </h1>
+    <p class="hero-sub">Photography by Yuto Furukawa &mdash; Tokyo, Japan</p>
+    <a href="#portfolio" class="btn-ghost">View Portfolio</a>
+  </div>
+  <div class="hero-scroll-hint">
+    Scroll
+    <span class="scroll-line"></span>
+  </div>
+</div>
+
+<!-- Portfolio -->
+<section class="section section--dark" id="portfolio">
+  <p class="section-tag reveal">Portfolio</p>
+  <h2 class="section-heading reveal d1">Selected Works</h2>
+
+  <div class="filter-bar reveal d2">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="portrait">Portrait</button>
+    <button class="filter-btn" data-filter="landscape">Landscape</button>
+    <button class="filter-btn" data-filter="wedding">Wedding</button>
+    <button class="filter-btn" data-filter="commercial">Commercial</button>
+    <button class="filter-btn" data-filter="event">Event</button>
+  </div>
+
+  <div class="photo-grid">
+    {% if photos %}
+      {% for photo in photos %}
+      <div class="photo-item reveal" data-category="{{ photo.category }}">
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+        <div class="photo-overlay">
+          <div>
+            <h3>{{ photo.title }}</h3>
+            <span>{{ photo.get_category_display }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      {% for i in "123456789" %}
+      <div class="photo-item reveal">
+        <div class="photo-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <div class="about-img">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="about-text reveal d2">
+      <p class="section-tag">About</p>
+      <h2 class="section-heading">Light is My<br><em>Medium</em></h2>
+      <p>東京を拠点に活動するフォトグラファー、古川勇人です。日常の中に宿る美しさと感情を、写真という形で永遠に残すことを使命としています。</p>
+      <p>ポートレートからウェディング、風景、コマーシャルフォトまで幅広いジャンルで活動。一瞬一瞬を丁寧に向き合い、その空気感ごとフレームに収めます。</p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">5+</div>
+          <div class="stat-lbl">Years Active</div>
+        </div>
+        <div>
+          <div class="stat-num">200+</div>
+          <div class="stat-lbl">Projects</div>
+        </div>
+        <div>
+          <div class="stat-num">50+</div>
+          <div class="stat-lbl">Clients</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="section section--dark" id="services">
+  <p class="section-tag reveal">Services</p>
+  <h2 class="section-heading reveal d1">What I Offer</h2>
+  <div class="services-grid">
+    <div class="service-card reveal d1">
+      <span class="service-num">01</span>
+      <h3 class="service-title">Portrait</h3>
+      <p class="service-desc">個人・家族・カップルのポートレート撮影。自然な表情を引き出し、その人だけの一枚を丁寧に残します。</p>
+    </div>
+    <div class="service-card reveal d2">
+      <span class="service-num">02</span>
+      <h3 class="service-title">Wedding</h3>
+      <p class="service-desc">大切な一日のすべてをドキュメントします。挙式から披露宴まで、二人だけの物語を美しい写真に。</p>
+    </div>
+    <div class="service-card reveal d3">
+      <span class="service-num">03</span>
+      <h3 class="service-title">Commercial</h3>
+      <p class="service-desc">製品・企業・ブランドの魅力を伝えるビジュアルコンテンツを制作。広告・SNS・ECサイト対応。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="contact-wrap reveal">
+    <p class="section-tag">Contact</p>
+    <h2 class="section-heading">Let's Work<br><em>Together</em></h2>
+    <p>撮影のご依頼・ご相談はお気軽にご連絡ください。</p>
+
+    {% if request.GET.sent %}
+    <div class="form-success">メッセージを送信しました。2〜3営業日以内にご連絡いたします。</div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-lbl">お名前</label>
+          <input type="text" name="name" class="form-field" placeholder="山田 太郎" required>
+        </div>
+        <div class="form-group">
+          <label class="form-lbl">メールアドレス</label>
+          <input type="email" name="email" class="form-field" placeholder="hello@example.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-lbl">メッセージ</label>
+        <textarea name="message" class="form-field form-textarea" placeholder="撮影のご依頼内容をお書きください..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Send Message</button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
